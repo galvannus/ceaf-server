@@ -6,12 +6,10 @@ const PaymentSchema = mongoose.Schema({
         require: true,
         trim: true
     },
-    student: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student'
-    },
+    type: [],
     creator: {
         type: mongoose.Schema.Types.ObjectId,
+        require: true,
         ref: 'User'
     },
     created: {

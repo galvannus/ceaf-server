@@ -1,13 +1,20 @@
 const Payment = require('../models/Payment');
+const { validationResult } = require('express-validator');
 
 
 exports.createPayment = async (req, res) => {
+
+    //Check if errors exist
+    const errors = validationResult(req);
+    if( !errors.isEmpty() ) {
+        return res.status(400).json({ errors: errors.array() })
+    }
 
     try {
 
         //Create new payment
         const payment = new Payment(req.body);
-
+        console.log(req.body);
         //Save creator with jwt
         payment.creator = req.user.id;
 
