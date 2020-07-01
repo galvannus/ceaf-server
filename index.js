@@ -2,6 +2,9 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 
+const pdf = require('html-pdf');
+const pdfTemplate = require('./documents/index');
+
 //Create server
 const app = express();
 
@@ -22,6 +25,21 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/students', require('./routes/students'));
+
+//Generation of pdf
+app.post('/create-pdf', (req, res) => {
+    pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (error) => {
+        if(error) {
+            res.send(Promise.reject());
+        }
+        res.send(Promise.resolve());
+    });
+});
+
+//Send de pdf to the client
+app.get('/fetch-pdf', (req,res) => {
+    res.sendFile(`${__dirname}/result.pdf`);
+});
 
 //Run app
 app.listen(PORT, () => {
