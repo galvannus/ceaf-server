@@ -49,7 +49,7 @@ app.listen(PORT, () => {
     console.log(`El servidor funciona en el puerto ${PORT}`);
 });
 
-//Create new user
+/*
 let user = new User({
     name: 'sistemas',
     email: 'demonwacho@hotmail.com',
@@ -60,4 +60,4 @@ if(user) {
     //Save user
     user.save();
 }
-
+*/
