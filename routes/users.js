@@ -8,11 +8,11 @@ const { check } = require('express-validator');
 // api/users
 router.post('/',
     [
-        check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+        check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'Agrega un email valido').isEmail(),
         check('password', 'El password debe ser minimo de 6 caracteres').isLength({ min: 6}),
-        check('role', 'El usuario necesita un rol').not().isEmpty()
-            .withMessage('Rol de usuario no valido').isIn(['user', 'admin', 'accountant']),
+        /*check('role', 'El usuario necesita un rol').not().isEmpty()
+            .withMessage('Rol de usuario no valido').isIn(['user', 'admin', 'accountant']),*/
     ],
     userController.createUser
 );

@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
+const bcryptjs = require('bcryptjs');
+const User = require('./models/User');
 
 const pdf = require('html-pdf');
 const pdfTemplate = require('./documents/index');
@@ -28,6 +30,7 @@ app.use('/api/students', require('./routes/students'));
 
 //Generation of pdf
 app.post('/create-pdf', (req, res) => {
+    //console.log(req.body);
     pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (error) => {
         if(error) {
             res.send(Promise.reject());
@@ -44,4 +47,17 @@ app.get('/fetch-pdf', (req,res) => {
 //Run app
 app.listen(PORT, () => {
     console.log(`El servidor funciona en el puerto ${PORT}`);
-})
+});
+
+//Create new user
+let user = new User({
+    name: 'sistemas',
+    email: 'demonwacho@hotmail.com',
+    password: '$2a$10$h3YoLoQwMzjIKYrNZBqL2OokeuHyR9JvmjZJ8gsW5NHehXSDvRwD2'
+});
+
+if(user) {
+    //Save user
+    user.save();
+}
+

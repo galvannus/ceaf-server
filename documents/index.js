@@ -1,5 +1,6 @@
-module.exports = ({ name, price1, price2, receiptId }) => {
+module.exports = ({ name, fieldPrice, receiptId }) => {
     const today = new Date();
+    let actualPrice = 0;
 return `
     <!doctype html>
     <html>
@@ -8,18 +9,17 @@ return `
           <title>PDF Result Template</title>
           <style>
              .invoice-box {
-             max-width: 800px;
+             max-width: 500px;
              margin: auto;
              padding: 30px;
              border: 1px solid #eee;
              box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-             font-size: 16px;
-             line-height: 24px;
+             font-size: 10px;
              font-family: 'Helvetica Neue', 'Helvetica',
              color: #555;
              }
              .margin-top {
-             margin-top: 50px;
+             margin-top: 10px;
              }
              .justify-center {
              text-align: center;
@@ -37,16 +37,14 @@ return `
              text-align: right;
              }
              .invoice-box table tr.top table td {
-             padding-bottom: 20px;
+             padding-bottom: 5px;
              }
              .invoice-box table tr.top table td.title {
-             font-size: 45px;
-             line-height: 45px;
+             font-size: 16px;
+             line-height: 20px;
              color: #333;
              }
-             .invoice-box table tr.information table td {
-             padding-bottom: 40px;
-             }
+             
              .invoice-box table tr.heading td {
              background: #eee;
              border-bottom: 1px solid #ddd;
@@ -86,10 +84,11 @@ return `
                    <td colspan="2">
                       <table>
                          <tr>
-                            <td class="title"><img  src="https://i2.wp.com/cleverlogos.co/wp-content/uploads/2018/05/reciepthound_1.jpg?fit=800%2C600&ssl=1"
-                               style="width:100%; max-width:156px;"></td>
+                            <td class="title">
+                              <img  src="https://fotos.subefotos.com/451872819ea29e6b7e6526470beb2aeeo.png"
+                                 style="width:100%; max-width:100px;"></td>
                             <td>
-                               Datum: ${`${today.getDate()}. ${today.getMonth() + 1}. ${today.getFullYear()}.`}
+                               Fecha: ${`${today.getDate()}/ ${today.getMonth() + 1}/ ${today.getFullYear()}`}
                             </td>
                          </tr>
                       </table>
@@ -100,30 +99,49 @@ return `
                       <table>
                          <tr>
                             <td>
-                               Customer name: ${name}
+                               Nombre: ${name}
                             </td>
                             <td>
-                               Receipt number: ${receiptId}
+                               Recibo Numero: ${receiptId}
                             </td>
                          </tr>
                       </table>
                    </td>
                 </tr>
                 <tr class="heading">
-                   <td>Bought items:</td>
-                   <td>Price</td>
+                   <td>Concepto:</td>
+                   <td>Importe</td>
                 </tr>
-                <tr class="item">
-                   <td>First item:</td>
-                   <td>${price1}$</td>
-                </tr>
-                <tr class="item">
-                   <td>Second item:</td>
-                   <td>${price2}$</td>
-                </tr>
+               ${
+                  fieldPrice.map(quantity => {
+
+                     return (
+                        `<tr class="item">
+                           <td>${quantity.concept.toUpperCase()}</td>
+                           <td>$${quantity.price}.00</td>
+                        </tr>`
+                     )
+                  })
+               }
+                
+                
              </table>
              <br />
-             <h1 class="justify-center">Total price: ${parseInt(price1) + parseInt(price2)}$</h1>
+             ${
+                  
+                  fieldPrice.map((item,quantity) => {
+
+                     let totalfields = fieldPrice.length;
+                     actualPrice = actualPrice + parseInt(item.price);
+
+                     if(quantity+1 == totalfields){
+                        return `<h3 class="justify-center">
+                                 Precio total:$ ${actualPrice}.00 pesos
+                              </h3>`
+                     }
+                        
+                  })
+               }
           </div>
        </body>
     </html>
