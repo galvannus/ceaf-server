@@ -1,11 +1,13 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
-const bcryptjs = require('bcryptjs');
 const User = require('./models/User');
+const path = require(“path”);
 
 const pdf = require('html-pdf');
 const pdfTemplate = require('./documents/index');
+
+
 
 //Create server
 const app = express();
@@ -21,6 +23,7 @@ app.use(express.json({ extended: true }));
 
 //Port of the app
 const PORT = process.env.PORT || 4000;
+app.use(express.static(path.join(__dirname, “client/build”)));
 
 //Importar rutas
 app.use('/api/users', require('./routes/users'));
@@ -61,3 +64,6 @@ if(user) {
     user.save();
 }
 */
+sudo ln -s /etc/nginx/sites-available/ceaf-server /etc/nginx/sites-enabled/ceaf-server
+sudo chown -R ubuntu ceaf-server
+
