@@ -8,7 +8,7 @@ const auth = require('../middleware/auth');
 //Create users
 // api/users
 router.post('/',
-    auth
+    auth,
     [
         check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'Agrega un email valido').isEmail(),
