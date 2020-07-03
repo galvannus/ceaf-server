@@ -29,10 +29,10 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/students', require('./routes/students'));
 
-app.use(express.static(path.join(__dirname, 'ceaf-client', 'build')));
+app.use(express.static(path.join(__dirname, 'test-deploy/build')));
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'ceaf-client' ,'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'test-deploy' ,'build', 'index.html'));
   });
 
 
