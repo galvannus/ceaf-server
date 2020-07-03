@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const User = require('./models/User');
-
+const path = require('path');
 const pdf = require('html-pdf');
 const pdfTemplate = require('./documents/index');
 
@@ -28,6 +28,8 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/students', require('./routes/students'));
+app.use(express.static(path.join(__dirname, 'ceaf-client/build')))
+
 
 //Generation of pdf
 app.post('/create-pdf', (req, res) => {
@@ -46,9 +48,10 @@ app.get('/fetch-pdf', (req,res) => {
 });
 
 //Run app
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT,() => {
     console.log(`El servidor funciona en el puerto ${PORT}`);
 });
+
 
 /*
 let user = new User({
