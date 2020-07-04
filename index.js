@@ -31,12 +31,16 @@ app.use('/api/students', require('./routes/students'));
 
 app.use(express.static(path.join(__dirname, 'ceaf-client/build')));
 
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'ceaf-client' ,'build', 'index.html'));
   });
-/*app.get('/iniciar-sesion', function(req, res) {
-res.sendFile(path.join(__dirname, 'ceaf-client' ,'build', 'index.html'));
-});*/
+app.get('/iniciar-sesion', function(req, res) {
+    res.sendFile(path.join(__dirname, 'ceaf-client' ,'build', 'index.html'));
+});
+app.get('/pagos', function(req, res) {
+    res.sendFile(path.join(__dirname, 'ceaf-client' ,'build', 'index.html'));
+});
 
 
 //Generation of pdf
