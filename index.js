@@ -29,8 +29,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/students', require('./routes/students'));
 
+//Client Routes
 app.use(express.static(path.join(__dirname, 'ceaf-client/build')));
-
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'ceaf-client' ,'build', 'index.html'));
@@ -43,9 +43,10 @@ app.get('/pagos', function(req, res) {
 });
 
 
+//TODO: Better performace to this routes
 //Generation of pdf
 app.post('/create-pdf', (req, res) => {
-    //console.log(req.body);
+    console.log(req.body);
     pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (error) => {
         if(error) {
             res.send(Promise.reject());
@@ -54,7 +55,7 @@ app.post('/create-pdf', (req, res) => {
     });
 });
 
-//Send de pdf to the client
+//Send pdf to the client
 app.get('/fetch-pdf', (req,res) => {
     res.sendFile(`${__dirname}/result.pdf`);
 });
