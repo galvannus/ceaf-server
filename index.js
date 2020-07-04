@@ -46,7 +46,6 @@ app.get('/pagos', function(req, res) {
 //TODO: Better performace to this routes
 //Generation of pdf
 app.post('/create-pdf', (req, res) => {
-    console.log(req.body);
     pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (error) => {
         if(error) {
             res.send(Promise.reject());
